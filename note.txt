@@ -1,0 +1,44 @@
+make DockerFile
+
+docker build -t(tag) backend .
+docker build -t(tag) mongo . agar mai mongo banata to
+
+// till here we have crated ;one  images
+
+///////////////////////////////
+docker run -p  3000:3000 backend
+Server is running on port 3000
+
+// Server started from docker  now
+////////////////////////////////// ////
+
+
+// to inject my database url in docker container
+// bad way putting in dockerfiel  =># ENV DATABASE_URL ="URL" THATS NOTACCEPTALE LEKIN OF DATA VISIVLE TO OTHER WHILEL USING THIS IMAGE
+
+//good way ;under this 
+docker run -p 3000:3000 -e DATABASE_URL=" connection string"backend
+
+
+// inside dockerunthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                    NAMES
+ae5640520d4d   backend            "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   0.0.0.0:3000->3000/tcp   sharp_hawking
+0f60f6ee48bf   redis:7.4-alpine   "docker-entrypoint.s…"   26 hours ago    Up 3 minutes   0.0.0.0:6379->6379/tcp   12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker exec -it ae5640520d4d /bin/bash
+root@ae5640520d4d:/app# ls
+Dockerfile  dist  node_modules  note.txt  package-lock.json  package.json  prisma  src  tsconfig.json
+root@ae5640520d4d:/app# top
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                       
+    1 root      20   0 1859200  67788  53964 S   0.0   1.8   0:00.23 node                                                                                          
+   29 root      20   0    4192   3460   2948 S   0.0   0.1   0:00.00 bash                                                                                          
+   36 root      20   0    8628   4944   2896 R   0.0   0.1   0:00.00 top                                                                                           
+
+root@ae5640520d4d:/app# pwd
+/app
+root@ae5640520d4d:/app# ls
+Dockerfile  dist  node_modules  note.txt  package-lock.json  package.json  prisma  src  tsconfig.json
+root@ae5640520d4d:/app# node
+>
+root@ae5640520d4d:/app# node
+
+
