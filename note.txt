@@ -210,14 +210,7 @@ unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$
 //******************************************************************************************/////////////////////////
 docker compose  and pushing to dockerhub
 
-docker-compose up -d
+When to Use What?
+Use a Dockerfile when you need to build a custom image.
 
-docker-compose down
-
-docker-compose up -d --build
-
-docker-compose up -d --build --force-recreate
-
-docker-compose up -d --build --force-recreate --remove-orphans
-
-docker-compose up -d --build --force-recreate --remove-orphans --no-deps 
+Use Docker Compose when managing multiple services (e.g., backend, frontend, database) in a project.
