@@ -1,7 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 // const mongoUrl: string = 'mongodb://mongoankitgupta:27017/myDatabase';//LOOK AT THIS AN
-const mongoUrl: string = 'mongodb://localhost:27017/myDatabase';
+// const mongoUrl: string = 'mongodb://localhost:27017/myDatabase';
+// const mongoUrl: string = 'mongodb://ankit_mongo:27017/myDatabase';
+// for docker compose
+const mongoUrl: string = process.env.MONGO_URL ||'mongodb://localhost:27017/myDatabase';
 
 // Connect to MongoDB
 mongoose.connect(mongoUrl)

@@ -1,5 +1,5 @@
 make DockerFile
-
+https://projects.100xdevs.com/tracks/docker-2/docker-2-1
 docker build -t(tag) backend .
 docker build -t(tag) mongo . agar mai mongo banata to
 
@@ -470,3 +470,495 @@ docker run -d ankitguptahbti/23-march:latest => for lateest tag if not mention l
 
 
 nOW I WILL  GO THROUGH THE DOCKER COMPOSE NEXT=>
+
+
+
+
+
+
+DOCKER COMPOSE:
+
+
+https://projects.100xdevs.com/tracks/docker-2/docker-2-1
+docker-compose.yml
+Docker Compose is a tool designed to help you define and run multi-container Docker applications. With Compose, you use a YAML file to configure your application's services, networks, and volumes. Then, with a single command, you can create and start all the services from your configuration.
+
+
+
+
+
+Before docker-compose
+
+first this is format and then i will let you see code:
+Create a network
+docker network create my_custom_network
+
+Create a volume
+docker volume create volume_database
+
+Start mongo container
+docker run -d -v volume_database:/data/db --name mongo --network my_custom_network  mongo
+
+Start backend container
+docker run -d -p 3000:3000 --name backend --network my_custom_network backend
+
+
+
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker network create ankit_network
+1068bb7ffa950f42ac42806d710c000f7e812665ec8a9ca0b7339cdfcb23b9f0
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker volume create ankit_database
+ankit_database
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -v ankit_database:/data/db --name ankit_mongo --network ankit_network  mongo
+d5176bcb4703632916be0affd76413cabd0cdee3ce25ad3c4277cc8afa5203db
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ above 2 command neglext
+above: command not found
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker volume create ankit_volume
+ankit_volume
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -v ankit_volume:/data/db --name ankit_mongo --network ankit_network  mongo
+docker: Error response from daemon: Conflict. The container name "/ankit_mongo" is already in use by container "d5176bcb4703632916be0affd76413cabd0cdee3ce25ad3c4277cc8afa5203db". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS         PORTS                      NAMES
+d5176bcb4703   mongo                     "docker-entrypoint.s…"   7 minutes ago   Up 7 minutes   27017/tcp                  ankit_mongo
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   2 hours ago     Up 2 hours     3000/tcp                   suspicious_mendel
+23a408b1222a   mongo_app                 "docker-entrypoint.s…"   7 hours ago     Up 7 hours     0.0.0.0:3000->3000/tcp     backendasdf_new
+5f4ac3c83548   mongo                     "docker-entrypoint.s…"   7 hours ago     Up 7 hours     0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago      Up 21 hours    0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker kill d5176bcb4703
+d5176bcb4703
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -v ankit_volume:/data/db --name ankit_mongo --network ankit_network  mongo
+docker: Error response from daemon: Conflict. The container name "/ankit_mongo" is already in use by container "d5176bcb4703632916be0affd76413cabd0cdee3ce25ad3c4277cc8afa5203db". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED       STATUS        PORTS                      NAMES
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   2 hours ago   Up 2 hours    3000/tcp                   suspicious_mendel
+23a408b1222a   mongo_app                 "docker-entrypoint.s…"   7 hours ago   Up 7 hours    0.0.0.0:3000->3000/tcp     backendasdf_new
+5f4ac3c83548   mongo                     "docker-entrypoint.s…"   7 hours ago   Up 7 hours    0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago    Up 21 hours   0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker images
+REPOSITORY                TAG          IMAGE ID       CREATED          SIZE
+ankitguptahbti/23-march   v1-dev       8303fe46d762   44 minutes ago   1.26GB
+ankitguptahbti/23-march   latest       dad3cd09efe2   2 hours ago      1.26GB
+mongo_app                 latest       d9a7eb5dd1d9   7 hours ago      1.26GB
+<none>                    <none>       caaaadf16316   7 hours ago      1.26GB
+optimiselayer             latest       d777213ad154   21 hours ago     1.25GB
+<none>                    <none>       c9dfe1694799   21 hours ago     1.25GB
+<none>                    <none>       db66e5ba7e52   21 hours ago     1.25GB
+<none>                    <none>       36c460e65497   21 hours ago     1.25GB
+<none>                    <none>       f6574a4770b9   21 hours ago     1.25GB
+<none>                    <none>       969e7414c350   21 hours ago     1.25GB
+backend                   latest       eec89cbe9158   2 days ago       1.3GB
+<none>                    <none>       7d522abdcd3e   2 days ago       1.3GB
+mongo                     latest       b81a621037ef   8 days ago       887MB
+redis                     7.4-alpine   8f5c54441eb9   2 months ago     41.4MB
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED       STATUS        PORTS                      NAMES
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   2 hours ago   Up 2 hours    3000/tcp                   suspicious_mendel
+23a408b1222a   mongo_app                 "docker-entrypoint.s…"   7 hours ago   Up 7 hours    0.0.0.0:3000->3000/tcp     backendasdf_new
+5f4ac3c83548   mongo                     "docker-entrypoint.s…"   7 hours ago   Up 7 hours    0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago    Up 21 hours   0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -v ankit_volume:/data/db --name ankit_mongo --network ankit_network  mongo
+docker: Error response from daemon: Conflict. The container name "/ankit_mongo" is already in use by container "d5176bcb4703632916be0affd76413cabd0cdee3ce25ad3c4277cc8afa5203db". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker rm -f ankit_mongo
+docker run -d -v ankit_volume:/data/db --name ankit_mongo --network ankit_network mongo
+ankit_mongo
+5418ad639052e649471577c826fbaa47f61716b718ad945f0f855a94afd3f5ef
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$  docker run -t ankit_image .
+Unable to find image 'ankit_image:latest' locally
+docker: Error response from daemon: pull access denied for ankit_image, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t ankit_image .
+[+] Building 9.1s (12/12) FINISHED                                                                                                                                docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                                              0.0s
+ => => transferring dockerfile: 1.31kB                                                                                                                                            0.0s
+ => [internal] load metadata for docker.io/library/node:20                                                                                                                        2.5s
+ => [auth] library/node:pull token for registry-1.docker.io                                                                                                                       0.0s
+ => [internal] load .dockerignore                                                                                                                                                 0.0s
+ => => transferring context: 58B                                                                                                                                                  0.0s
+ => [1/6] FROM docker.io/library/node:20@sha256:735b1ba7e4550c415f98568efbf527e3f75828ac4f10692e490ca78e11d89f6e                                                                  0.0s
+ => [internal] load build context                                                                                                                                                 0.0s
+ => => transferring context: 54.91kB                                                                                                                                              0.0s
+ => CACHED [2/6] WORKDIR /app                                                                                                                                                     0.0s
+ => CACHED [3/6] COPY package.json package-lock.json ./                                                                                                                           0.0s
+ => CACHED [4/6] RUN npm install                                                                                                                                                  0.0s
+ => [5/6] COPY . .                                                                                                                                                                0.1s
+ => [6/6] RUN npm run build                                                                                                                                                       6.0s
+ => exporting to image                                                                                                                                                            0.2s 
+ => => exporting layers                                                                                                                                                           0.1s 
+ => => writing image sha256:0a4ae56cd8d01c74400dd9412b93d9283aa2ac4f400ccd9b31ac2017a25f95b1                                                                                      0.0s
+ => => naming to docker.io/library/ankit_image                                                                                                                                    0.0s
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run --newtork ankit_network -p 3000:3000 ankit_image
+unknown flag: --newtork
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run --newtwork ankit_network -p 3000:3000 ankit_image
+unknown flag: --newtwork
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run --network ankit_network -p 3000:3000 ankit_image
+docker: Error response from daemon: driver failed programming external connectivity on endpoint sweet_kepler (d71175463b5f017f9506a93b386a409436df1e71cbfcdf64f2724eacf31e65be): Bind for 0.0.0.0:3000 failed: port is already allocated
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS         PORTS                      NAMES
+5418ad639052   mongo                     "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   27017/tcp                  ankit_mongo
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   2 hours ago     Up 2 hours     3000/tcp                   suspicious_mendel
+23a408b1222a   mongo_app                 "docker-entrypoint.s…"   7 hours ago     Up 7 hours     0.0.0.0:3000->3000/tcp     backendasdf_new
+5f4ac3c83548   mongo                     "docker-entrypoint.s…"   7 hours ago     Up 7 hours     0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago      Up 21 hours    0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker images
+REPOSITORY                TAG          IMAGE ID       CREATED          SIZE
+ankit_image               latest       0a4ae56cd8d0   3 minutes ago    1.26GB
+ankitguptahbti/23-march   v1-dev       8303fe46d762   51 minutes ago   1.26GB
+ankitguptahbti/23-march   latest       dad3cd09efe2   2 hours ago      1.26GB
+mongo_app                 latest       d9a7eb5dd1d9   7 hours ago      1.26GB
+<none>                    <none>       caaaadf16316   8 hours ago      1.26GB
+optimiselayer             latest       d777213ad154   21 hours ago     1.25GB
+<none>                    <none>       c9dfe1694799   21 hours ago     1.25GB
+<none>                    <none>       db66e5ba7e52   21 hours ago     1.25GB
+<none>                    <none>       36c460e65497   21 hours ago     1.25GB
+<none>                    <none>       f6574a4770b9   21 hours ago     1.25GB
+<none>                    <none>       969e7414c350   21 hours ago     1.25GB
+backend                   latest       eec89cbe9158   2 days ago       1.3GB
+<none>                    <none>       7d522abdcd3e   2 days ago       1.3GB
+mongo                     latest       b81a621037ef   8 days ago       887MB
+redis                     7.4-alpine   8f5c54441eb9   2 months ago     41.4MB
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker stop backendasdf_new
+docker rm backendasdf_new
+backendasdf_new
+backendasdf_new
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run --network ankit_network -p 3000:3000 ankit_image
+Server running at http://localhost:3000
+MongoDB connected
+
+
+
+
+
+
+
+
+
+
+WITH DOCKER COMPOSE:
+
+version: '3'
+services:
+  mongodb:  
+    image: "mongo"
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    networks:
+      - ankit_network
+     volumes:
+      - mongodb_data:/data/db
+ 
+// correponding to the above code :::::
+docker network create ankit_network
+
+docker run -d --name mongodb --network ankit_network -p 27017:27017 -v mongodb_data:/data/db  mongo
+
+
+  backend:
+    image: backend22
+    ports:
+      - 3000:3000
+    container_name: backend_application  
+    networks:
+      - ankit_network
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URL: "mongo://mongodb:27017"
+
+// correponding to the above code :::::
+docker-compose up -d  
+
+// correponding to the above code :::::
+docker run -d --name backend_application --network ankit_network -p 3000:3000 backend22 
+
+
+
+// correponding to the above code :::::
+docker run -d --name backend_application --network ankit_network -p 3000:3000 backend22
+
+//after adding depends and environment variables in
+docker run -d --name backend_application --network ankit_network --env MONGO_URL=mongo://mongodb:27017 --depends-on mongodb -p 3000:3000 backend22
+
+
+//at last for vol
+volumes:
+  mongodb_data:
+
+
+
+
+/// seeing THROUGH commands:
+//******************************************************************************///
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose -v
+docker-compose version 1.29.2, build unknown
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose -up
+Define and run multi-container applications with Docker.
+
+Usage:
+  docker-compose [-f <arg>...] [--profile <name>...] [options] [--] [COMMAND] [ARGS...]
+  docker-compose -h|--help
+
+Options:
+  -f, --file FILE             Specify an alternate compose file
+                              (default: docker-compose.yml)
+  -p, --project-name NAME     Specify an alternate project name
+                              (default: directory name)
+  --profile NAME              Specify a profile to enable
+  -c, --context NAME          Specify a context name
+  --verbose                   Show more output
+  --log-level LEVEL           Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  --ansi (never|always|auto)  Control when to print ANSI control characters
+  --no-ansi                   Do not print ANSI control characters (DEPRECATED)
+  -v, --version               Print version and exit
+  -H, --host HOST             Daemon socket to connect to
+
+  --tls                       Use TLS; implied by --tlsverify
+  --tlscacert CA_PATH         Trust certs signed only by this CA
+  --tlscert CLIENT_CERT_PATH  Path to TLS certificate file
+  --tlskey TLS_KEY_PATH       Path to TLS key file
+  --tlsverify                 Use TLS and verify the remote
+  --skip-hostname-check       Don't check the daemon's hostname against the
+                              name specified in the client certificate
+  --project-directory PATH    Specify an alternate working directory
+                              (default: the path of the Compose file)
+  --compatibility             If set, Compose will attempt to convert keys
+                              in v3 files to their non-Swarm equivalent (DEPRECATED)
+  --env-file PATH             Specify an alternate environment file
+
+Commands:
+  build              Build or rebuild services
+  config             Validate and view the Compose file
+  create             Create services
+  down               Stop and remove resources
+  events             Receive real time events from containers
+  exec               Execute a command in a running container
+  help               Get help on a command
+  images             List images
+  kill               Kill containers
+  logs               View output from containers
+  pause              Pause services
+  port               Print the public port for a port binding
+  ps                 List containers
+  pull               Pull service images
+  push               Push service images
+  restart            Restart services
+  rm                 Remove stopped containers
+  run                Run a one-off command
+  scale              Set number of containers for a service
+  start              Start services
+  stop               Stop services
+  top                Display the running processes
+  unpause            Unpause services
+  up                 Create and start containers
+  version            Show version information and quit
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose up -d
+Creating network "week-15-live-1_default" with the default driver
+Creating volume "week-15-live-1_mongodb_data" with default driver
+Pulling backend22 (backend22:)...
+ERROR: The image for the service you're trying to recreate has been removed. If you continue, volume data could be lost. Consider backing up your data before continuing.
+
+Continue with the new image? [yN]y
+Pulling backend22 (backend22:)...
+ERROR: pull access denied for backend22, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose up
+Pulling backend22 (backend22:)...
+ERROR: The image for the service you're trying to recreate has been removed. If you continue, volume data could be lost. Consider backing up your data before continuing.
+
+Continue with the new image? [yN]y
+Pulling backend22 (backend22:)...
+ERROR: pull access denied for backend22, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t backend22 .
+[+] Building 5.1s (12/12) FINISHED                                                                                                                                docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                                              0.0s
+ => => transferring dockerfile: 1.31kB                                                                                                                                            0.0s
+ => [internal] load metadata for docker.io/library/node:20                                                                                                                        2.6s
+ => [auth] library/node:pull token for registry-1.docker.io                                                                                                                       0.0s
+ => [internal] load .dockerignore                                                                                                                                                 0.0s
+ => => transferring context: 58B                                                                                                                                                  0.0s
+ => [1/6] FROM docker.io/library/node:20@sha256:735b1ba7e4550c415f98568efbf527e3f75828ac4f10692e490ca78e11d89f6e                                                                  0.0s
+ => [internal] load build context                                                                                                                                                 0.0s
+ => => transferring context: 58.47kB                                                                                                                                              0.0s
+ => CACHED [2/6] WORKDIR /app                                                                                                                                                     0.0s
+ => CACHED [3/6] COPY package.json package-lock.json ./                                                                                                                           0.0s
+ => CACHED [4/6] RUN npm install                                                                                                                                                  0.0s
+ => [5/6] COPY . .                                                                                                                                                                0.1s
+ => [6/6] RUN npm run build                                                                                                                                                       2.1s
+ => exporting to image                                                                                                                                                            0.1s 
+ => => exporting layers                                                                                                                                                           0.1s 
+ => => writing image sha256:3ef54527d865c7f307676507c8f09ece304675d01cc144702f994fddc419f21d                                                                                      0.0s
+ => => naming to docker.io/library/backend22                                                                                                                                      0.0s
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose up
+Creating mongodb ... 
+Creating mongodb ... error
+
+ERROR: for mongodb  Cannot start service mongodb: driver failed programming external connectivity on endpoint mongodb (b85e643eebac9db8b7d173e65d479b838a44b8d2a9e8d9d3bae5c38bb90549be): Bind for 0.0.0.0:27017 failed: port is already allocated
+
+ERROR: for mongodb  Cannot start service mongodb: driver failed programming external connectivity on endpoint mongodb (b85e643eebac9db8b7d173e65d479b838a44b8d2a9e8d9d3bae5c38bb90549be): Bind for 0.0.0.0:27017 failed: port is already allocated
+ERROR: Encountered errors while bringing up the project.
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS          PORTS                      NAMES
+215c2e5622ac   ankit_image               "docker-entrypoint.s…"   42 minutes ago   Up 42 minutes   0.0.0.0:3000->3000/tcp     musing_robinson
+5418ad639052   mongo                     "docker-entrypoint.s…"   49 minutes ago   Up 49 minutes   27017/tcp                  ankit_mongo
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   3 hours ago      Up 3 hours      3000/tcp                   suspicious_mendel
+5f4ac3c83548   mongo                     "docker-entrypoint.s…"   8 hours ago      Up 8 hours      0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago       Up 22 hours     0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker stop 5f4ac3c83548 5418ad639052
+5f4ac3c83548
+5418ad639052
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS          PORTS                    NAMES
+215c2e5622ac   ankit_image               "docker-entrypoint.s…"   43 minutes ago   Up 43 minutes   0.0.0.0:3000->3000/tcp   musing_robinson
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   3 hours ago      Up 3 hours      3000/tcp                 suspicious_mendel
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago       Up 22 hours     0.0.0.0:6379->6379/tcp   12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose up
+Starting mongodb ... done
+Creating backend_app ... 
+Creating backend_app ... error
+
+ERROR: for backend_app  Cannot start service backend22: driver failed programming external connectivity on endpoint backend_app (a9e111a20c2504554bd9e4cde7f47eabab7e79277f32260b44f606888d24bc58): Bind for 0.0.0.0:3000 failed: port is already allocated
+
+ERROR: for backend22  Cannot start service backend22: driver failed programming external connectivity on endpoint backend_app (a9e111a20c2504554bd9e4cde7f47eabab7e79277f32260b44f606888d24bc58): Bind for 0.0.0.0:3000 failed: port is already allocated
+ERROR: Encountered errors while bringing up the project.
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker stop 215c2e5622ac
+215c2e5622ac
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker-compose up
+mongodb is up-to-date
+Starting backend_app ... done
+Attaching to mongodb, backend_app
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.359+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.360+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.360+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set at least one of the related parameters","attr":{"relatedParameters":["tcpFastOpenServer","tcpFastOpenClient","tcpFastOpenQueueSize"]}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.361+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":25},"outgoing":{"minWireVersion":6,"maxWireVersion":25},"isInternalClient":true}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.361+00:00"},"s":"I",  "c":"TENANT_M", "id":7091600, "ctx":"main","msg":"Starting TenantMigrationAccessBlockerRegistry"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.362+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"de3025e4ed5c"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.362+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"8.0.5","gitVersion":"cb9e2e5e552ee39dea1e39d7859336456d0c9820","openSSLVersion":"OpenSSL 3.0.13 30 Jan 2024","modules":[],"allocator":"tcmalloc-google","environment":{"distmod":"ubuntu2404","distarch":"x86_64","target_arch":"x86_64"}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.362+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"24.04"}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.362+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.372+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.373+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=1353M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,remove=true,path=journal,compressor=snappy),builtin_extension_config=(zstd=(compression_level=6)),file_manager=(close_idle_time=600,close_scan_interval=10,close_handle_minimum=2000),statistics_log=(wait=0),json_output=(error,message),verbose=[recovery_progress:1,checkpoint_progress:1,compact_progress:1,backup:0,checkpoint:0,compact:0,evict:0,history_store:0,recovery:0,rts:0,salvage:0,tiered:0,timestamp:0,transaction:0,verify:0,log:0],prefetch=(available=true,default=false),"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.657+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729160,"ts_usec":657741,"thread":"1:0x7f4aeba54680","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":34,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery log replay has successfully finished and ran for 0 milliseconds"}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.657+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729160,"ts_usec":657891,"thread":"1:0x7f4aeba54680","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":34,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Set global recovery timestamp: (0, 0)"}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.657+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729160,"ts_usec":657927,"thread":"1:0x7f4aeba54680","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":34,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Set global oldest timestamp: (0, 0)"}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.657+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729160,"ts_usec":657979,"thread":"1:0x7f4aeba54680","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":34,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery was completed successfully and took 0ms, including 0ms for the log replay, 0ms for the rollback to stable, and 0ms for the checkpoint."}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.684+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":311}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.684+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.738+00:00"},"s":"I",  "c":"STORAGE",  "id":9529901, "ctx":"initandlisten","msg":"Initializing durable catalog","attr":{"numRecords":0}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.738+00:00"},"s":"I",  "c":"STORAGE",  "id":9529902, "ctx":"initandlisten","msg":"Retrieving all idents from storage engine"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.738+00:00"},"s":"I",  "c":"STORAGE",  "id":9529903, "ctx":"initandlisten","msg":"Initializing all collections in durable catalog","attr":{"numEntries":0}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.758+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.758+00:00"},"s":"W",  "c":"CONTROL",  "id":9068900, "ctx":"initandlisten","msg":"For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile","attr":{"allocator":"tcmalloc-google","sysfsFile":"/sys/kernel/mm/transparent_hugepage/defrag","currentValue":"madvise","desiredValue":"defer+madvise"},"tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.758+00:00"},"s":"W",  "c":"CONTROL",  "id":8640302, "ctx":"initandlisten","msg":"We suggest setting the contents of sysfsFile to 0.","attr":{"sysfsFile":"/sys/kernel/mm/transparent_hugepage/khugepaged/max_ptes_none","currentValue":511},"tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.758+00:00"},"s":"W",  "c":"NETWORK",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":262144,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.759+00:00"},"s":"W",  "c":"CONTROL",  "id":8386700, "ctx":"initandlisten","msg":"We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.","attr":{"sysfsFile":"/proc/sys/vm/swappiness","currentValue":60},"tags":["startupWarnings"]}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.759+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"admin.system.version","uuidDisposition":"provided","uuid":{"uuid":{"$uuid":"e48d50bb-1ec6-455b-9c6b-2bfb782ff17b"}},"options":{"uuid":{"$uuid":"e48d50bb-1ec6-455b-9c6b-2bfb782ff17b"}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.793+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"e48d50bb-1ec6-455b-9c6b-2bfb782ff17b"}},"namespace":"admin.system.version","index":"_id_","ident":"index-1-6124224169385772769","collectionIdent":"collection-0-6124224169385772769","commitTimestamp":null}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.793+00:00"},"s":"I",  "c":"REPL",     "id":20459,   "ctx":"initandlisten","msg":"Setting featureCompatibilityVersion","attr":{"newVersion":"8.0"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.793+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"8.0","context":"setFCV"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.793+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":25},"outgoing":{"minWireVersion":6,"maxWireVersion":25},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":25,"maxWireVersion":25},"outgoing":{"minWireVersion":25,"maxWireVersion":25},"isInternalClient":true}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":25,"maxWireVersion":25},"outgoing":{"minWireVersion":25,"maxWireVersion":25},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":25,"maxWireVersion":25},"outgoing":{"minWireVersion":25,"maxWireVersion":25},"isInternalClient":true}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"8.0","context":"startup"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"CONTROL",  "id":6608200, "ctx":"initandlisten","msg":"Initializing cluster server parameters from disk"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.794+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.795+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"initandlisten","msg":"createCollection","attr":{"namespace":"local.startup_log","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"77cab043-02a8-4102-966b-a63377a14cb2"}},"options":{"capped":true,"size":10485760}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.845+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"initandlisten","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"77cab043-02a8-4102-966b-a63377a14cb2"}},"namespace":"local.startup_log","index":"_id_","ident":"index-3-6124224169385772769","collectionIdent":"collection-2-6124224169385772769","commitTimestamp":null}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.845+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.845+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.845+00:00"},"s":"I",  "c":"STORAGE",  "id":7333401, "ctx":"initandlisten","msg":"Starting the DiskSpaceMonitor"}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.846+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.846+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0:27017"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.846+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.846+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Set up periodic runner":"0 ms","Set up online certificate status protocol manager":"0 ms","Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Create storage engine":"366 ms","Write current PID to file":"0 ms","Write a new metadata for storage engine":"10 ms","Initialize FCV before rebuilding indexes":"1 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Load cluster parameters from disk for a standalone":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Start up the replication coordinator":"0 ms","Ensure the change stream collections on startup contain consistent data":"0 ms","Write startup options to the audit log":"0 ms","Start transport layer":"1 ms","_initAndListen total elapsed time":"484 ms"}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.847+00:00"},"s":"I",  "c":"CONTROL",  "id":20712,   "ctx":"LogicalSessionCacheReap","msg":"Sessions collection is not set up; waiting until next sessions reap interval","attr":{"error":"NamespaceNotFound: config.system.sessions does not exist"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.847+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"LogicalSessionCacheRefresh","msg":"createCollection","attr":{"namespace":"config.system.sessions","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"3667858a-8863-4ec3-881e-0ba85dbd4dfa"}},"options":{}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.915+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"3667858a-8863-4ec3-881e-0ba85dbd4dfa"}},"namespace":"config.system.sessions","index":"_id_","ident":"index-5-6124224169385772769","collectionIdent":"collection-4-6124224169385772769","commitTimestamp":null}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:00.915+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"LogicalSessionCacheRefresh","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"3667858a-8863-4ec3-881e-0ba85dbd4dfa"}},"namespace":"config.system.sessions","index":"lsidTTLIndex","ident":"index-6-6124224169385772769","collectionIdent":"collection-4-6124224169385772769","commitTimestamp":null}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:01.007+00:00"},"s":"W",  "c":"CONTROL",  "id":636300,  "ctx":"ftdc","msg":"Use of deprecated server parameter name","attr":{"deprecatedName":"internalQueryCacheSize","canonicalName":"internalQueryCacheMaxEntriesPerCollection"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:01.007+00:00"},"s":"W",  "c":"CONTROL",  "id":636300,  "ctx":"ftdc","msg":"Use of deprecated server parameter name","attr":{"deprecatedName":"oplogSamplingLogIntervalSeconds","canonicalName":"collectionSamplingLogIntervalSeconds"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:01.007+00:00"},"s":"W",  "c":"NETWORK",  "id":23803,   "ctx":"ftdc","msg":"Use of deprecated server parameter 'sslMode', please use 'tlsMode' instead."}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:01.008+00:00"},"s":"W",  "c":"CONTROL",  "id":636300,  "ctx":"ftdc","msg":"Use of deprecated server parameter name","attr":{"deprecatedName":"wiredTigerConcurrentReadTransactions","canonicalName":"storageEngineConcurrentReadTransactions"}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:01.008+00:00"},"s":"W",  "c":"CONTROL",  "id":636300,  "ctx":"ftdc","msg":"Use of deprecated server parameter name","attr":{"deprecatedName":"wiredTigerConcurrentWriteTransactions","canonicalName":"storageEngineConcurrentWriteTransactions"}}
+backend_app  | Server running at http://localhost:3000
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.764+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.21.0.3:43928","uuid":{"uuid":{"$uuid":"1e2db602-6958-4579-9098-810456e4dd85"}},"connectionId":1,"connectionCount":1}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.768+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn1","msg":"client metadata","attr":{"remote":"172.21.0.3:43928","client":"conn1","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.14.2|8.12.2"},"platform":"Node.js v20.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.12.5-linuxkit","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+backend_app  | MongoDB connected
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.779+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.21.0.3:43934","uuid":{"uuid":{"$uuid":"c8658075-a3c4-4a71-82bc-44e2902949cb"}},"connectionId":2,"connectionCount":2}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.780+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn2","msg":"client metadata","attr":{"remote":"172.21.0.3:43934","client":"conn2","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.14.2|8.12.2"},"platform":"Node.js v20.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.12.5-linuxkit","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.784+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn2","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":3}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.784+00:00"},"s":"I",  "c":"STORAGE",  "id":20320,   "ctx":"conn2","msg":"createCollection","attr":{"namespace":"test.users","uuidDisposition":"generated","uuid":{"uuid":{"$uuid":"bdda647a-c3d5-48f0-8c97-d5826e3c52c7"}},"options":{}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:43.828+00:00"},"s":"I",  "c":"INDEX",    "id":20345,   "ctx":"conn2","msg":"Index build: done building","attr":{"buildUUID":null,"collectionUUID":{"uuid":{"$uuid":"bdda647a-c3d5-48f0-8c97-d5826e3c52c7"}},"namespace":"test.users","index":"_id_","ident":"index-8-6124224169385772769","collectionIdent":"collection-7-6124224169385772769","commitTimestamp":null}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:54.282+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.21.0.3:44432","uuid":{"uuid":{"$uuid":"155b415b-3405-471e-a063-d666fd832723"}},"connectionId":3,"connectionCount":3}}
+mongodb      | {"t":{"$date":"2025-03-23T11:26:54.284+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn3","msg":"client metadata","attr":{"remote":"172.21.0.3:44432","client":"conn3","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.14.2|8.12.2"},"platform":"Node.js v20.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.12.5-linuxkit","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:27:00.764+00:00"},"s":"I",  "c":"WTCHKPT",  "id":22430,   "ctx":"Checkpointer","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729220,"ts_usec":764394,"thread":"1:0x7f4add2136c0","session_name":"WT_SESSION.checkpoint","category":"WT_VERB_CHECKPOINT_PROGRESS","category_id":7,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"saving checkpoint snapshot min: 40, snapshot max: 40 snapshot count: 0, oldest timestamp: (0, 0) , meta checkpoint timestamp: (0, 0) base write gen: 1"}}}
+mongodb      | {"t":{"$date":"2025-03-23T11:28:00.854+00:00"},"s":"I",  "c":"WTCHKPT",  "id":22430,   "ctx":"Checkpointer","msg":"WiredTiger message","attr":{"message":{"ts_sec":1742729280,"ts_usec":854509,"thread":"1:0x7f4add2136c0","session_name":"WT_SESSION.checkpoint","category":"WT_VERB_CHECKPOINT_PROGRESS","category_id":7,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"saving checkpoint snapshot min: 42, snapshot max: 42 snapshot count: 0, oldest timestamp: (0, 0) , meta checkpoint timestamp: (0, 0) base write gen: 1"}}}
+mongodb 
+//****************************************************************************///////////////
+seeing container:
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS              PORTS                      NAMES
+c22adc766f89   backend22                 "docker-entrypoint.s…"   2 minutes ago   Up About a minute   0.0.0.0:3000->3000/tcp     backend_app
+de3025e4ed5c   mongo                     "docker-entrypoint.s…"   3 minutes ago   Up 2 minutes        0.0.0.0:27017->27017/tcp   mongodb
+77c8cb1d9843   ankitguptahbti/23-march   "docker-entrypoint.s…"   3 hours ago     Up 3 hours          3000/tcp                   suspicious_mendel
+0f60f6ee48bf   redis:7.4-alpine          "docker-entrypoint.s…"   4 days ago      Up 22 hours         0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ 
+
+
+
+
+//now you can using postamn:
+localhost:3000/user=>
+{
+    "email":"ankitdocker@gmail.com",
+    "name":"ankit",
+    "age":18
+}
+output:
+{
+    "message": "User created",
+    "user": {
+        "name": "ankit",
+        "age": 18,
+        "email": "ankitdocker@gmail.com",
+        "_id": "67dff111c21f5cc686ce355a",
+        "__v": 0
+    }
+}
+
+
+/// 
+see all volume and newtwork
+# List all Docker volumes
+docker volume ls  
+
+# Inspect a specific Docker volume (replace <volume_name> with the actual name)
+docker volume inspect <volume_name>  
+
+# Remove a specific Docker volume (replace <volume_name> with the actual name)
+docker volume rm <volume_name>  
+
+# List all Docker networks
+docker network ls  
+
+# Inspect a specific Docker network (replace <network_name> with the actual name)
+docker network inspect <network_name>  
+
+# Remove a specific Docker network (replace <network_name> with the actual name)
+docker network rm <network_name>  
+
