@@ -42,3 +42,182 @@ root@ae5640520d4d:/app# node
 root@ae5640520d4d:/app# node
 
 
+
+
+////////////*****************************************************************************************************/////////////////////////////////////////////////////////////////////////
+Newtwork and Volumes
+
+
+
+added 20 packages, and audited 105 packages in 4s
+
+13 packages are looking for funding
+  run `npm fund` for details
+
+6 vulnerabilities (3 low, 3 high)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t mongo_app
+ERROR: "docker buildx build" requires exactly 1 argument.
+See 'docker buildx build --help'.
+
+Usage:  docker buildx build [OPTIONS] PATH | URL | -
+
+Start a build
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t mongo_app .
+[+] Building 16.7s (11/11) FINISHED                                                                                                                    docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                                   0.0s
+ => => transferring dockerfile: 1.31kB                                                                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/node:20                                                                                                             2.7s
+ => [internal] load .dockerignore                                                                                                                                      0.0s
+ => => transferring context: 58B                                                                                                                                       0.0s
+ => [1/6] FROM docker.io/library/node:20@sha256:735b1ba7e4550c415f98568efbf527e3f75828ac4f10692e490ca78e11d89f6e                                                       0.0s
+ => [internal] load build context                                                                                                                                      0.0s
+ => => transferring context: 54.35kB                                                                                                                                   0.0s
+ => CACHED [2/6] WORKDIR /app                                                                                                                                          0.0s
+ => [3/6] COPY package.json package-lock.json ./                                                                                                                       0.0s
+ => [4/6] RUN npm install                                                                                                                                             11.0s
+ => [5/6] COPY . .                                                                                                                                                     0.1s 
+ => [6/6] RUN npm run build                                                                                                                                            2.3s 
+ => exporting to image                                                                                                                                                 0.4s 
+ => => exporting layers                                                                                                                                                0.4s 
+ => => writing image sha256:caaaadf16316033ec536e8f89c847f72135fa598d13506345a42ba98b21deef0                                                                           0.0s
+ => => naming to docker.io/library/mongo_app                                                                                                                           0.0s
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker volume create volume_database
+volume_database
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker network create my_custom_newtwork
+9699ed1fed14b64d3f0c45542370cf8a7cc13eff80443594aef1864737309e89
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker network ls
+NETWORK ID     NAME                 DRIVER    SCOPE
+9023acb50ea9   12-march_default     bridge    local
+a4a55bf5a984   bridge               bridge    local
+a1b05ebf113b   host                 host      local
+9699ed1fed14   my_custom_newtwork   bridge    local
+f3363b2c0881   none                 null      local
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -v volume_database:/data/db --name mongoankitgupta --network my_custom_newtwork -p 2
+7017:27017 mongo
+5f4ac3c83548d345dcdc975a88c8e52e9fcc10f0121d5977f04a2f4b81776d24
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ ping localhost
+PING localhost (127.0.0.1) 56(84) bytes of data.
+64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.055 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.041 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=64 time=0.042 ms
+^C
+--- localhost ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2070ms
+rtt min/avg/max/mdev = 0.041/0.046/0.055/0.006 ms
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ ping mongoankitgupta
+ping: mongoankitgupta: Temporary failure in name resolution
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdf --newtork my_custom_newtwork mongo_app
+unknown flag: --newtork
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdf --newtwork my_custom_newtwork mongo_app
+unknown flag: --newtwork
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdf --network my_custom_newtwork mongo_app
+cc6c1ac243f69a129a72f5aa62d4345bc9c1913649db7e5634dfb56d34f5bfea
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t mongo_app
+ERROR: "docker buildx build" requires exactly 1 argument.
+See 'docker buildx build --help'.
+
+Usage:  docker buildx build [OPTIONS] PATH | URL | -
+
+Start a build
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker build -t mongo_app .
+[+] Building 5.7s (11/11) FINISHED                                                      docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                    0.0s
+ => => transferring dockerfile: 1.31kB                                                                  0.0s
+ => [internal] load metadata for docker.io/library/node:20                                              2.9s
+ => [internal] load .dockerignore                                                                       0.0s
+ => => transferring context: 58B                                                                        0.0s
+ => [1/6] FROM docker.io/library/node:20@sha256:735b1ba7e4550c415f98568efbf527e3f75828ac4f10692e490ca7  0.0s
+ => [internal] load build context                                                                       0.0s
+ => => transferring context: 7.41kB                                                                     0.0s
+ => CACHED [2/6] WORKDIR /app                                                                           0.0s
+ => CACHED [3/6] COPY package.json package-lock.json ./                                                 0.0s
+ => CACHED [4/6] RUN npm install                                                                        0.0s
+ => [5/6] COPY . .                                                                                      0.0s
+ => [6/6] RUN npm run build                                                                             2.5s
+ => exporting to image                                                                                  0.1s 
+ => => exporting layers                                                                                 0.1s 
+ => => writing image sha256:d9a7eb5dd1d927952f5c6a9f5591fe95e5db95b141e86e21799f2cd0959e892e            0.0s
+ => => naming to docker.io/library/mongo_app                                                            0.0s
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$  docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED              STATUS              PORTS                      NAMES
+cc6c1ac243f6   caaaadf16316       "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:3000->3000/tcp     backendasdf
+5f4ac3c83548   mongo              "docker-entrypoint.s…"   6 minutes ago        Up 6 minutes        0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine   "docker-entrypoint.s…"   3 days ago           Up 14 hours         0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdf --network my_custom_newtwork mongo_app
+docker: Error response from daemon: Conflict. The container name "/backendasdf" is already in use by container "cc6c1ac243f69a129a72f5aa62d4345bc9c1913649db7e5634dfb56d34f5bfea". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdfasdf --network my_custom_newtwork mongo_app
+d57b2e2e7b6deac29bd1bc39f8e343cbaa9fe4a165b848661bbd725a79b55b51
+docker: Error response from daemon: driver failed programming external connectivity on endpoint backendasdfasdf (3bcc4fb35ba33947992d6fbc4c5f1b1ed3f797fdf56698ed181eb2a6bd2cc667): Bind for 0.0.0.0:3000 failed: port is already allocated
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run  -p 3000:3000 --name bac
+kendasdfasdf --network my_custom_newtwork mongo_app
+docker: Error response from daemon: Conflict. The container name "/backendasdfasdf" is already in use by container "d57b2e2e7b6deac29bd1bc39f8e343cbaa9fe4a165b848661bbd725a79b55b51". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backend_new --network my_custom_newtwork mongo_app
+f6642823893beeb3770abda9cebef378fc39529763ce25e62173f3e54e5434f8
+docker: Error response from daemon: driver failed programming external connectivity on endpoint backend_new (4785b67adcb64738715d4b2017d380a79cc0e173c099cf28b1b51e8ffbec99d5): Bind for 0.0.0.0:3000 failed: port is already allocated
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                      NAMES
+cc6c1ac243f6   caaaadf16316       "docker-entrypoint.s…"   7 minutes ago    Up 7 minutes    0.0.0.0:3000->3000/tcp     backendasdf
+5f4ac3c83548   mongo              "docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine   "docker-entrypoint.s…"   3 days ago       Up 14 hours     0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker kill cc6c1ac243f6
+cc6c1ac243f6
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                      NAMES
+5f4ac3c83548   mongo              "docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine   "docker-entrypoint.s…"   3 days ago       Up 14 hours     0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backend_new --network my_custom_newtwork mongo_app
+docker: Error response from daemon: Conflict. The container name "/backend_new" is already in use by container "f6642823893beeb3770abda9cebef378fc39529763ce25e62173f3e54e5434f8". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker run -d -p 3000:3000 --name backendasdf_new --network my_custom_newtwork mongo_app
+23a408b1222a75145d2aab8710fd6197972e738bbc05e83b31bbcf1df5237ca0
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$  docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                      NAMES
+23a408b1222a   mongo_app          "docker-entrypoint.s…"   55 seconds ago   Up 54 seconds   0.0.0.0:3000->3000/tcp     backendasdf_new
+5f4ac3c83548   mongo              "docker-entrypoint.s…"   14 minutes ago   Up 14 minutes   0.0.0.0:27017->27017/tcp   mongoankitgupta
+0f60f6ee48bf   redis:7.4-alpine   "docker-entrypoint.s…"   3 days ago       Up 14 hours     0.0.0.0:6379->6379/tcp     12-march-redis-1
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ docker logs 23a408b1222a
+Server running at http://localhost:3000
+MongoDB connected
+unthinkable-lap@PG02R0JG:~/Desktop/Project/learningdocker/week-15-live-1$ 
+
+
+
+
+
+
+//******************************************************************************************/////////////////////////
+docker compose  and pushing to dockerhub
+
+docker-compose up -d
+
+docker-compose down
+
+docker-compose up -d --build
+
+docker-compose up -d --build --force-recreate
+
+docker-compose up -d --build --force-recreate --remove-orphans
+
+docker-compose up -d --build --force-recreate --remove-orphans --no-deps 
